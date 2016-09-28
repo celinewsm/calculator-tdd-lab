@@ -1,11 +1,11 @@
 class Calculator
-  attr_reader :result , :past_results , :current_index , :cannot_redo
+  attr_reader :result , :past_results , :current_index , :redo_before
 
   def initialize result = 0
     @result = result
     @past_results = [result]
     @current_index = 0
-    @cannot_redo = true
+    @redo_before = false
   end
 
   def add input = @result
@@ -64,17 +64,17 @@ class Calculator
   end
 
   def redo
-    if @cannot_redo === false
+    if redo_before === false
       @current_index += 1
       @result = @past_results[@current_index]
-      @cannot_redo = true
+      @redo_before = true
     end
   end
 
   def to_clear
     @past_results.pop(@past_results.length-@current_index-1)
     # @past_results.pop(2)
-    @cannot_redo = false
+    @redo_before = false
   end
 
 end
